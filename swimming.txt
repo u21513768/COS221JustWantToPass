@@ -1,0 +1,32 @@
+Entities:
+.) Swimmer, i.e name and type of swimming used etc.
+.) Venues, i.e spesific pool (pool id), event, {num lanes} etc
+.) Race, i.e with distace, number of swimmers, scedule, swimmer DNF(relationship between swimmer and race), num of people, heats of people etc.
+.) Timer, i.e time passed, end time, person speed, method, timeframe (time left, time passed etc) etc.
+.) pool, i.e types of pools etc.
+.) event, i.e multiple races in 1 event, etc.
+
+Things to consider for the swimming eer diagram:
+.) Individual/team(tournaments?) sports
+.) How long is the lane to swim in
+.) how much laps to do
+.) Time it took from start to end
+.) types of swimming strokes used
+.) how many participants in the race
+.) fastest lap time
+.) disqualifications (false start, etc)
+.) event stats/race stats
+.) speed average
+.) event ID
+
+For location: 
+.) Can have one locations for multiple days, i.e olympics was 9 days for a competition
+.) has a physical location
+
+
+tournaments:
+.) 4 people in group, each swims a quarter of the way (4 x 100/200) [relay]
+.) individual races (M:50,100,200,1500) (W:50,100,100,200,800)
+
+
+
