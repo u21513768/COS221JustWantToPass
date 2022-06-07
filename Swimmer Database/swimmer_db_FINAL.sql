@@ -136,6 +136,7 @@ CREATE TABLE `race` (
   `Date` date NOT NULL,
   `Distance` int(11) NOT NULL,
   `Stroke_Type` varchar(20) DEFAULT NULL,
+  `Start_Time` time DEFAULT NULL,
   PRIMARY KEY (`Race_ID`),
   KEY `Pool_ID` (`Pool_ID`),
   KEY `Event_ID` (`Event_ID`),
@@ -151,23 +152,23 @@ CREATE TABLE `race` (
 LOCK TABLES `race` WRITE;
 /*!40000 ALTER TABLE `race` DISABLE KEYS */;
 INSERT INTO `race` VALUES
-(1,1,1,'2022-02-14',50,'Butterfly'),
-(2,1,1,'2022-02-14',50,'Back'),
-(3,2,1,'2022-02-14',50,'Freestyle'),
-(4,2,1,'2022-02-14',100,'Breast'),
-(5,2,1,'2022-02-14',100,'Back'),
-(6,3,1,'2022-02-14',100,'Freestyle'),
-(7,3,1,'2022-02-14',50,'Breast'),
-(8,3,1,'2022-02-14',50,'Butterfly'),
-(9,1,1,'2022-02-14',50,'Back'),
-(10,1,1,'2022-02-14',50,'Freestyle'),
-(11,1,1,'2022-02-14',100,'Breast'),
-(12,5,2,'2022-02-22',50,'Practice relay'),
-(13,5,2,'2022-02-22',100,'Practice relay'),
-(14,5,3,'2022-02-22',50,'Freestyle'),
-(15,5,3,'2022-02-22',50,'Breast'),
-(16,5,3,'2022-02-22',100,'Freestyle'),
-(17,5,3,'2022-02-22',100,'Breast');
+(1,1,1,'2022-02-14',50,'Butterfly','16:00:00'),
+(2,1,1,'2022-02-14',50,'Back','11:00:00'),
+(3,2,1,'2022-02-14',50,'Freestyle','08:30:00'),
+(4,2,1,'2022-02-14',100,'Breast','13:30:00'),
+(5,2,1,'2022-02-14',100,'Back','14:00:00'),
+(6,3,1,'2022-02-14',100,'Freestyle','14:00:00'),
+(7,3,1,'2022-02-14',50,'Breast','14:00:00'),
+(8,3,1,'2022-02-14',50,'Butterfly','14:00:00'),
+(9,1,1,'2022-02-14',50,'Back','14:00:00'),
+(10,1,1,'2022-02-14',50,'Freestyle','14:00:00'),
+(11,1,1,'2022-02-14',100,'Breast','14:00:00'),
+(12,5,2,'2022-02-22',50,'Practice relay','14:00:00'),
+(13,5,2,'2022-02-22',100,'Practice relay','14:00:00'),
+(14,5,3,'2022-02-22',50,'Freestyle','14:00:00'),
+(15,5,3,'2022-02-22',50,'Breast','14:00:00'),
+(16,5,3,'2022-02-22',100,'Freestyle','14:00:00'),
+(17,5,3,'2022-02-22',100,'Breast','14:00:00');
 /*!40000 ALTER TABLE `race` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -183,7 +184,6 @@ CREATE TABLE `race_swimmer` (
   `Swimmer_ID` int(11) DEFAULT NULL,
   `Swimmer_Time` time(3) DEFAULT NULL,
   `Swimmer_Position` int(11) DEFAULT NULL,
-  `Team_Position` int(11) DEFAULT NULL,
   KEY `Swimmer_ID` (`Swimmer_ID`),
   KEY `Race_ID` (`Race_ID`),
   CONSTRAINT `race_swimmer_ibfk_1` FOREIGN KEY (`Swimmer_ID`) REFERENCES `swimmer` (`Swimmer_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -198,10 +198,14 @@ CREATE TABLE `race_swimmer` (
 LOCK TABLES `race_swimmer` WRITE;
 /*!40000 ALTER TABLE `race_swimmer` DISABLE KEYS */;
 INSERT INTO `race_swimmer` VALUES
-(7,7,'00:03:22.000',1,3),
-(3,4,'00:00:55.000',3,1),
-(5,4,'00:01:55.000',2,1),
-(9,3,'00:01:23.000',1,1);
+(7,7,'00:03:22.000',1),
+(3,4,'00:00:55.000',3),
+(5,4,'00:01:55.000',2),
+(9,3,'00:01:23.000',1),
+(8,1,'00:00:53.000',2),
+(8,2,'00:00:50.000',1),
+(8,3,'00:00:57.000',4),
+(8,4,'00:00:59.000',5);
 /*!40000 ALTER TABLE `race_swimmer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -339,7 +343,7 @@ CREATE TABLE `users` (
   `user_name` varchar(100) DEFAULT NULL,
   `password` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -348,6 +352,8 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES
+(1,'JesseNaidoo','Playstore24');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -420,4 +426,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-06-07 15:45:30
+-- Dump completed on 2022-06-07 22:36:28
