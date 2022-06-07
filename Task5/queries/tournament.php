@@ -98,7 +98,7 @@ session_start();
                     $event_id = $_POST['event_id'];
                     $query1 = "SELECT * FROM race WHERE event_id = '$event_id'";
                     $query2 = "SELECT event_swimmer.Event_ID, swimmer.Swimmer_ID, swimmer.Fname, swimmer.Lname, swimmer.sex
-                    FROM event_swimmer INNER JOIN swimmer ON event_swimmer.Swimmer_ID = swimmer.SwimmerID
+                    FROM event_swimmer INNER JOIN swimmer ON event_swimmer.Swimmer_ID = swimmer.Swimmer_ID
                         WHERE event_swimmer.Event_ID = '$event_id'";
                     $query3 = "SELECT venue_event.Event_ID, venue.Venue_ID, venue.Name, venue.Opening_hours, venue.Street_name, venue.Area_Code, venue.Street_Number
                     FROM venue_event INNER JOIN venue ON venue_event.Venue_ID = venue.Venue_ID
