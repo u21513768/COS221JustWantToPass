@@ -13,8 +13,10 @@ session_start();
         if (!empty($user_name) && !empty($password))
         {
             //save to database
+            $user_id = random_num(3);
+            $id = random_num(3);
             
-            $query = "INSERT INTO users (user_name, password) VALUES ('$user_name', '$password')";
+            $query = "INSERT INTO users (id, user_id, user_name, password) VALUES ('$id', '$user_id', '$user_name', '$password')";
             $query2 = "SELECT * FROM users;";
 
             if (mysqli_query($con, $query) === true)

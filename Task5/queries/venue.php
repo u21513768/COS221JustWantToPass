@@ -10,7 +10,7 @@ session_start();
     if(isset($_POST['delete_id']))
     {
         $id = $_POST['remove_id'];
-        $query = "DELETE FROM swimmer WHERE swimmer_id = '$id'";
+        $query = "DELETE FROM venue WHERE venue_id = '$id'";
 
         if(mysqli_query($con, $query) === true)
         {
@@ -32,74 +32,54 @@ session_start();
 
     if(isset($_POST['input_data']))
     {
-        $Fname = $_POST['Fname'];
-        $Lname = $_POST['Lname'];
-        $sex = $_POST['sex'];
-        $query = "INSERT INTO swimmer (Fname, Lname, sex) VALUES ('$Fname', '$Lname', '$sex')";
-        $query2;
-        
-       
-        if (isset($_POST['is_team_swimmer']))
+        $venue_name = $_POST['venue_name'];
+        $opening_hours = $_POST['opening_hours'];
+        $street_name = $_POST['street_name'];
+        $area_code = $_POST['area_code'];
+        $street_number = $_POST['street_number'];
+        $query = "INSERT INTO venue (name, opening_hours, street_name, area_code, street_number) VALUES ('$venue_name', '$opening_hours', '$street_name', '$area_code', '$street_number')";
+
+        if(mysqli_query($con, $query) === true)
         {
-            $team_id = $_POST['team_id'];
-            $result = $con->query("SELECT team_id FROM team WHERE team_id = '$team_id'");
-            if($result->num_rows == 0) 
-            {
-                // row not found, do stuff...
-                echo "Please enter valid team_ID";
-            }
-            else 
-            { 
-                if(mysqli_query($con, $query) === true)
-                {
-        
-                    $swimmer_id = mysqli_insert_id($con);
-                    $query2 = "INSERT INTO team_swimmer (swimmer_id, team_id) VALUES ('$swimmer_id', '$team_id')";
-                    if(mysqli_query($con, $query2) === true)
-                    {
-                        echo '<script>alert("Data Added successfully")</script>';
-                    }
-                    else
-                    {
-                        echo "Error: " . $query2 . "<br>" . $con->error;
-                    }
-                }
-                else
-                {
-                    echo "Error: " . $query . "<br>" . $con->error;
-                }
-            }
+            echo '<script>alert("Data Added successfully")</script>';
         }
         else
         {
+            echo "Error: " . $query . "<br>" . $con->error;
+        }
+    }
+
+    if(isset($_POST['input_pool']))
+    {
+        $venue_id = $_POST['venue_id'];
+        $pool_name = $_POST['pool_name'];
+        $num_lanes = $_POST['num_lanes'];
+        $query = "INSERT INTO pool (venue_id, pool_name, num_lanes) VALUES ('$venue_id', '$pool_name', '$num_lanes')";
+
+        $result = $con->query("SELECT venue_id FROM venue WHERE venue_id = '$venue_id'");
+        if($result->num_rows == 0) 
+        {
+            // row not found, do stuff...
+            echo "Please enter valid venue_ID";
+        }
+        else 
+        { 
             if(mysqli_query($con, $query) === true)
             {
-                $swimmer_id = mysqli_insert_id($con);
-                $query2 = "INSERT INTO solo_swimmer (swimmer_id) VALUES ('$swimmer_id')";
-                if(mysqli_query($con, $query2) === true)
-                {
-                    echo '<script>alert("Data Added successfully")</script>';
-                }
-                else
-                {
-                    echo "Error: " . $query2 . "<br>" . $con->error;
-                }
+                echo '<script>alert("Data Added successfully")</script>';
             }
             else
             {
                 echo "Error: " . $query . "<br>" . $con->error;
             }
         }
-
-        
-        
     }
 ?>
 
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Swimmers</title>
+        <title>Venues</title>
     </head>
     <body>
         <a href="../login/logout.php">logout</a>
@@ -109,41 +89,43 @@ session_start();
         <a href="swimmer.php">Swimmer</a>
         <a href="team.php">Team</a>
         <a href="tournament.php">Tournament</a>
-        <h1>This is the Swimmers page</h1>
+        <h1>This is the Venue page</h1>
         Hello <?php echo $user_data['user_name'];   ?><br/><br/>
 
         <form method="post">
-            <input type="submit" name="getSwimmers" value="Display All Swimmers"/><br/><br/>
-            <input type="text" name="remove_id" id="remove_id" value="Remove Swimmer by ID"/>
+            <input type="submit" name="getVenue" value="Display All Venues"/><br/><br/>
+            <input type="text" name="remove_id" id="remove_id" value="Remove Venue by ID"/>
             <input type="submit" name="delete_id" value="Delete"/><br/><br/>
 
-            <input type="text" name="Fname" id="Fname" value="First Name"/>
-            <input type="text" name="Lname" id="Lname" value="Last Name"/>
-            <input type="text" name="sex" id="sex" value="Sex"/>
-            <input type="text" name="team_id" id="team_id" value="Team ID"/><br/>
-
-            Swimmer forms part of a team?
-            <input type="checkbox" name="is_team_swimmer" value="Team"></br>
+            <input type="text" name="venue_name" id="venue_name" value="Venue Name"/>
+            <input type="time" name="opening_hours" id="opening_hours" value="Opening Hours"/>
+            <input type="text" name="street_name" id="street_name" value="Street Name"/>
+            <input type="text" name="area_code" id="area_code" value="Area Code"/>
+            <input type="text" name="street_number" id="street_number" value="Street Number"/>
             <input type="submit" name="input_data" value="Add"/><br/><br/>
+
+            <input type="text" name="venue_id" id="venue_id" value="Venue ID"/>
+            <input type="text" name="pool_name" id="pool_name" value="Pool Name"/>
+            <input type="text" name="num_lanes" id="num_lanes" value="Number of Lanes"/>
+            <input type="submit" name="input_pool" value="Add"/><br/><br/>
         </form>
         <div>
             <?php
-                if(isset($_POST['getSwimmers'])){
+                if(isset($_POST['getVenue'])){
 
-                    $query1 = "SELECT * FROM swimmer";
-                    $query2 = "SELECT * FROM race_swimmer";
-                    $query3 = "SELECT * FROM solo_swimmer";
-                    $query4 = "SELECT * FROM team_swimmer";
+                    $query1 = "SELECT * FROM venue";
+                    $query2 = "SELECT * FROM venue_event";
+                    $query3 = "SELECT * FROM pool";
                     $result1  = mysqli_query($con, $query1);
                     $result2  = mysqli_query($con, $query2);
                     $result3  = mysqli_query($con, $query3);
-                    $result4  = mysqli_query($con, $query4);
+
                     
                     if (mysqli_num_rows($result1) > 0) 
                     {
 
                         echo "<table>";
-                        echo "<tr>Swimmer Table: </tr><br/>";
+                        echo "<tr>Venue Table: </tr><br/>";
                         while($row = mysqli_fetch_assoc($result1))
                         {
                             echo "<tr>";
@@ -162,14 +144,14 @@ session_start();
                     }
                     else
                     {
-                        echo "Swimmer table is empty<br/><br/>";
+                        echo "Venue table is empty<br/><br/>";
                     }
 
                     if (mysqli_num_rows($result2) > 0) 
                     {
 
                         echo "<table>";
-                        echo "<tr>Race_Swimmer Table: </tr><br/>";
+                        echo "<tr>Venue_Event Table: </tr><br/>";
                         while($row = mysqli_fetch_assoc($result2))
                         {
                             echo "<tr>";
@@ -188,14 +170,14 @@ session_start();
                     }
                     else
                     {
-                        echo "Race_Swimmer table is empty<br/><br/>";
+                        echo "Venue_Event table is empty<br/><br/>";
                     }
 
                     if (mysqli_num_rows($result3) > 0) 
                     {
 
                         echo "<table>";
-                        echo "<tr>Solo_Swimmer Table: </tr><br/>";
+                        echo "<tr>Pool Table: </tr><br/>";
                         while($row = mysqli_fetch_assoc($result3))
                         {
                             echo "<tr>";
@@ -214,36 +196,9 @@ session_start();
                     }
                     else
                     {
-                        echo "Solo_Swimmer table is empty<br/><br/>";
+                        echo "Pool table is empty<br/><br/>";
                     }
-
-                    if (mysqli_num_rows($result4) > 0) 
-                    {
-
-                        echo "<table>";
-                        echo "<tr>Team_Swimmer Table: </tr><br/>";
-                        while($row = mysqli_fetch_assoc($result4))
-                        {
-                            echo "<tr>";
-                            foreach ($row as $k=>$v) 
-                            {
-                                //echo "<td>";
-                                echo "$k: $v";
-                                echo "\t";
-                                //echo "</td>";
-                            }
-                            echo "<br/>";
-                            echo "</tr>";
-                        }
-                        echo "</table><br/><br/>";
-                    
-                    }
-                    else
-                    {
-                        echo "Team_Swimmer table is empty<br/><br/>";
-                    }
-
-                    //unset($_POST['getEvents']);
+                    unset($_POST['getEvents']);
                 }
             ?>
         </div>
