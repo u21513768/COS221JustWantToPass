@@ -75,7 +75,7 @@ session_start();
         $swimmer_id = $_POST['swimmer_id'];
         $event_id = $_POST['event_id'];
         $query1 = "INSERT INTO race_swimmer (race_id, swimmer_id) VALUES ('$race_id' , '$swimmer_id')";
-        $query2 = "INSERT INTO event_swimmer (event_id, swimmer_id) VALUES ('$event_id', '$swimmer_id)'";
+        
 
         $result1 = $con->query("SELECT swimmer_id FROM swimmer WHERE swimmer_id = '$swimmer_id'");
         if($result1->num_rows == 0) 
@@ -93,13 +93,13 @@ session_start();
             }
             else 
             { 
-                if(mysqli_query($con, $query1) === true && mysqli_query($con, $query2) === true)
+                if(mysqli_query($con, $query1) === true)
                 {
                     echo '<script>alert("Data Added successfully")</script>';
                 }
                 else
                 {
-                    echo "Error: " . $query1 . $query2 . "<br>" . $con->error;
+                    echo "Error: " . $query1 . "<br>" . $con->error;
                 }
             }
         }
